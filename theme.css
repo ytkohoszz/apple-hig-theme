@@ -412,6 +412,59 @@ body.is-hidden-frameless .titlebar-button.mod-close:hover {
   color: #FFFFFF;
 }
 
+/* Полировка верхних вкладок: ровная капсула без плоского низа и мягкий вес текста */
+.workspace-tab-header-container-inner {
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+}
+
+.workspace-tab-header {
+  height: 28px;
+  padding: 0;
+  margin: auto 0;
+  border-radius: var(--radius-s);
+  box-shadow: none;
+}
+
+.workspace-tab-header::before,
+.workspace-tab-header::after,
+.workspace-tab-header.is-active::before,
+.workspace-tab-header.is-active::after {
+  display: none;
+}
+
+.workspace-tab-header.is-active {
+  background-color: var(--background-modifier-hover);
+  box-shadow: none;
+}
+
+.workspace-tab-header-inner {
+  height: 100%;
+  padding: 0 10px;
+  gap: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.workspace-tab-header-inner-title {
+  font-size: var(--font-ui-small);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.workspace-tab-header.is-active .workspace-tab-header-inner-title {
+  font-weight: 500;
+  color: var(--text-normal);
+}
+
+.workspace-tab-header-inner-close-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ==========================================================================
    5. ВЕРХНЯЯ ПАНЕЛЬ ЗАМЕТКИ (VIEW HEADER) И РАЗДЕЛИТЕЛИ ПАНЕЛЕЙ
    ========================================================================== */
@@ -1381,13 +1434,36 @@ button.mod-cta:hover {
   transition: background-color var(--hig-duration-normal) var(--hig-ease);
 }
 
+.checkbox-container {
+  position: relative;
+  width: 42px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+  border-radius: 999px;
+}
+
 .checkbox-container::after {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  margin: 0;
   width: 20px;
   height: 20px;
   border-radius: 50%;
   background-color: #FFFFFF;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transform: translate3d(0, 0, 0);
   transition: transform var(--hig-duration-spring) var(--hig-spring);
+}
+
+.checkbox-container.is-enabled::after {
+  transform: translate3d(18px, 0, 0);
+}
+
+.checkbox-container:active::after {
+  width: 20px;
 }
 
 .checkbox-container.is-enabled {
