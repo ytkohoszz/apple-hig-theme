@@ -349,6 +349,69 @@ body {
   background-color: var(--background-modifier-hover);
 }
 
+/* Режим скрытой рамки окна (Hidden Frame) на Windows Desktop */
+body.is-hidden-frameless .workspace-tab-header-container {
+  -webkit-app-region: drag;
+}
+
+body.is-hidden-frameless .workspace-tab-header,
+body.is-hidden-frameless .workspace-tab-header-new-tab,
+body.is-hidden-frameless .workspace-tab-header-tab-list,
+body.is-hidden-frameless .sidebar-toggle-button,
+body.is-hidden-frameless .clickable-icon,
+body.is-hidden-frameless .titlebar-button-container {
+  -webkit-app-region: no-drag;
+}
+
+/* Отступы под системные кнопки Windows справа и кнопку сайдбара слева при свёрнутой панели */
+body.is-hidden-frameless .workspace-tabs.mod-top-right-space .workspace-tab-header-container {
+  padding-right: calc(var(--frame-right-space, 138px) + 8px);
+}
+
+body.is-hidden-frameless .workspace-tabs.mod-top-left-space .workspace-tab-header-container {
+  padding-left: calc(var(--frame-left-space, 44px) + 8px);
+}
+
+/* Системные кнопки управления окном (свернуть, развернуть, закрыть) */
+body.is-hidden-frameless .titlebar-button-container.mod-right {
+  top: 0;
+  right: 8px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: transparent;
+}
+
+body.is-hidden-frameless .titlebar-button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-s);
+  background-color: transparent;
+  color: var(--icon-color);
+  opacity: 0.6;
+  transition:
+    opacity var(--hig-duration-fast) var(--hig-ease),
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    color var(--hig-duration-fast) var(--hig-ease);
+}
+
+body.is-hidden-frameless .titlebar-button:hover {
+  opacity: 1;
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+body.is-hidden-frameless .titlebar-button.mod-close:hover {
+  opacity: 1;
+  background-color: var(--hig-red, #FF3B30);
+  color: #FFFFFF;
+}
+
 /* ==========================================================================
    5. ВЕРХНЯЯ ПАНЕЛЬ ЗАМЕТКИ (VIEW HEADER) И РАЗДЕЛИТЕЛИ ПАНЕЛЕЙ
    ========================================================================== */
