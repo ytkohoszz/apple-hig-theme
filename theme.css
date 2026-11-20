@@ -21,10 +21,16 @@ settings:
     max: 20
     step: 1
     format: px
-  -
+-
     id: hig-properties-always-visible
     title: Всегда показывать блок Properties без затемнения
     description: Отключает приглушение прозрачности метаданных в верхней части заметки
+    type: class-toggle
+    default: false
+  -
+    id: hig-focus-mode
+    title: Режим фокуса при печати (Paragraph Dimming)
+    description: Приглушает неактивные абзацы в редакторе, пока курсор находится в тексте
     type: class-toggle
     default: false
 
@@ -91,10 +97,15 @@ body {
   --hig-blur-sidebar: blur(22px) saturate(180%);
   --hig-blur-popover: blur(30px) saturate(190%);
 
-  /* Анимации и кривая замедления iOS/macOS */
+/* Анимации: кривая замедления и пружинная физика iOS/macOS с лёгким отскоком */
   --hig-ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --hig-spring: linear(
+    0, 0.009, 0.035 2.1%, 0.141 4.4%, 0.723 12.9%, 0.938 16.7%, 1.017, 1.035 22.8%,
+    1.031 25.5%, 1.003 33.1%, 0.996 38.4%, 1.001 52%, 1
+  );
   --hig-duration-fast: 0.15s;
   --hig-duration-normal: 0.22s;
+  --hig-duration-spring: 0.38s;
 }
 
 /* ==========================================================================
@@ -929,9 +940,16 @@ input[type="checkbox"].task-list-item-checkbox:hover {
   border-color: var(--hig-accent);
 }
 
+@keyframes hig-checkbox-pop {
+  0% { transform: scale(0.82); }
+  55% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
 input[type="checkbox"].task-list-item-checkbox:checked {
   background-color: var(--hig-accent);
   border-color: var(--hig-accent);
+  animation: hig-checkbox-pop var(--hig-duration-spring) var(--hig-spring);
 }
 
 /* ==========================================================================
@@ -967,6 +985,17 @@ input[type="checkbox"].task-list-item-checkbox:checked {
   -webkit-backdrop-filter: blur(4px);
 }
 
+@keyframes hig-modal-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 /* Основной контейнер модального окна */
 .modal {
   background-color: var(--hig-surface-popover);
@@ -976,6 +1005,7 @@ input[type="checkbox"].task-list-item-checkbox:checked {
   border-radius: var(--radius-l);
   box-shadow: var(--hig-shadow-popover);
   padding: 20px 24px;
+  animation: hig-modal-enter var(--hig-duration-spring) var(--hig-spring);
 }
 
 .modal-title {
@@ -1294,7 +1324,7 @@ button.mod-cta:hover {
   border-radius: 50%;
   background-color: #FFFFFF;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-  transition: transform var(--hig-duration-normal) var(--hig-ease);
+  transition: transform var(--hig-duration-spring) var(--hig-spring);
 }
 
 .checkbox-container.is-enabled {
@@ -1873,4 +1903,68 @@ body:not(.is-mobile):not(.is-tablet) *:hover::-webkit-scrollbar-thumb {
 
 body:not(.is-mobile):not(.is-tablet) ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(128, 128, 134, 0.55);
+}
+
+/* ==========================================================================
+   27. ТИПОГРАФИКА APPLE, МЕДИА, REMINDERS И РЕЖИМ ФОКУСА (0.3.0)
+   ========================================================================== */
+
+/* Сглаживание шрифтов и типографские лигатуры */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.markdown-rendered,
+.cm-editor {
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+
+/* Табличные цифры (tabular-nums) для UI, счётчиков, дат и таблиц */
+.status-bar,
+.nav-file-tag,
+.metadata-property-value,
+.markdown-rendered table,
+.table-view-table,
+.suggestion-hotkey {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Изображения внутри заметок в стиле карточек Apple Notes */
+.markdown-rendered img:not(.emoji),
+.markdown-source-view.mod-cm6 img:not(.emoji) {
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-s);
+  margin: 12px 0;
+  transition: box-shadow var(--hig-duration-normal) var(--hig-ease);
+}
+
+.markdown-rendered img:not(.emoji):hover {
+  box-shadow: var(--shadow-l);
+}
+
+/* Выполненные задачи в стиле Apple Reminders */
+.markdown-rendered ul > li.task-list-item.is-checked,
+.markdown-rendered ul > li.task-list-item[data-task="x"],
+.markdown-rendered ul > li.task-list-item[data-task="X"],
+.cm-s-obsidian .HyperMD-task-line[data-task="x"],
+.cm-s-obsidian .HyperMD-task-line[data-task="X"] {
+  color: var(--text-faint);
+  text-decoration: line-through;
+  text-decoration-color: var(--text-faint);
+  text-decoration-thickness: 1px;
+  transition: color var(--hig-duration-normal) var(--hig-ease);
+}
+
+/* Опциональный режим фокуса (Typewriter / Paragraph Dimming) */
+body.hig-focus-mode .markdown-source-view.mod-cm6.is-focused .cm-line:not(.cm-active) {
+  opacity: 0.35;
+  transition: opacity var(--hig-duration-normal) var(--hig-ease);
+}
+
+body.hig-focus-mode .markdown-source-view.mod-cm6.is-focused .cm-line.cm-active,
+body.hig-focus-mode .markdown-source-view.mod-cm6 .cm-content:hover .cm-line {
+  opacity: 1;
+  transition: opacity var(--hig-duration-fast) var(--hig-ease);
 }
