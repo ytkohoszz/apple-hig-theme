@@ -365,7 +365,7 @@ body {
 
 .workspace-leaf-resize-handle {
   background-color: transparent;
-  border-color: transparent;
+  border: none;
   transition: background-color var(--hig-duration-fast) var(--hig-ease);
 }
 
@@ -388,6 +388,9 @@ body {
 .is-tablet .view-action,
 .is-mobile .workspace-tab-header-new-tab,
 .is-tablet .workspace-tab-header-new-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 44px;
   min-height: 44px;
   opacity: 0.85;
@@ -606,6 +609,9 @@ body {
 
 .is-mobile .nav-action-button,
 .is-tablet .nav-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 44px;
   min-height: 44px;
 }
@@ -1232,4 +1238,88 @@ select:focus,
   min-height: 44px;
   padding: 10px 18px;
   font-size: var(--font-ui-medium);
+}
+
+/* ==========================================================================
+   20. IPADOS / IOS SAFE AREAS (ВЫРЕЗЫ, ШТОРКИ И MOBILE TOOLBAR)
+   ========================================================================== */
+
+/* Верхняя шапка заметки и вкладки с учётом системного статус-бара iPadOS */
+.is-mobile .view-header,
+.is-tablet .view-header {
+  height: calc(48px + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: max(12px, env(safe-area-inset-left, 0px));
+  padding-right: max(12px, env(safe-area-inset-right, 0px));
+}
+
+/* Выезжающие боковые шторки (Left / Right Drawers) на iPadOS */
+.is-mobile .workspace-drawer,
+.is-tablet .workspace-drawer {
+  background-color: var(--hig-surface-sidebar);
+  backdrop-filter: var(--hig-blur-sidebar);
+  -webkit-backdrop-filter: var(--hig-blur-sidebar);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.is-mobile .workspace-drawer.mod-left,
+.is-tablet .workspace-drawer.mod-left {
+  padding-left: env(safe-area-inset-left, 0px);
+  border-right: 0.5px solid var(--divider-color);
+}
+
+.is-mobile .workspace-drawer.mod-right,
+.is-tablet .workspace-drawer.mod-right {
+  padding-right: env(safe-area-inset-right, 0px);
+  border-left: 0.5px solid var(--divider-color);
+}
+
+/* Нижний отступ полотна заметки, чтобы текст не перекрывался панелью инструментов */
+.is-mobile .markdown-source-view.mod-cm6 .cm-scroller,
+.is-tablet .markdown-source-view.mod-cm6 .cm-scroller,
+.is-mobile .markdown-reading-view .markdown-preview-view,
+.is-tablet .markdown-reading-view .markdown-preview-view {
+  padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Нижняя панель инструментов над клавиатурой и Home Indicator (Mobile Toolbar) */
+.is-mobile .mobile-toolbar,
+.is-tablet .mobile-toolbar {
+  background-color: var(--hig-surface-popover);
+  backdrop-filter: var(--hig-blur-popover);
+  -webkit-backdrop-filter: var(--hig-blur-popover);
+  border-top: 0.5px solid var(--background-modifier-border);
+  height: calc(46px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: max(8px, env(safe-area-inset-left, 0px));
+  padding-right: max(8px, env(safe-area-inset-right, 0px));
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.is-mobile .mobile-toolbar-options-list,
+.is-tablet .mobile-toolbar-options-list {
+  gap: 4px;
+  scrollbar-width: none;
+}
+
+.is-mobile .mobile-toolbar-options-list::-webkit-scrollbar,
+.is-tablet .mobile-toolbar-options-list::-webkit-scrollbar {
+  display: none;
+}
+
+.is-mobile .mobile-toolbar-option,
+.is-tablet .mobile-toolbar-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 42px;
+  border-radius: var(--radius-s);
+  transition: background-color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.is-mobile .mobile-toolbar-option:active,
+.is-tablet .mobile-toolbar-option:active {
+  background-color: var(--background-modifier-hover);
 }
