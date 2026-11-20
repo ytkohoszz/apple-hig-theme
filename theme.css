@@ -1125,7 +1125,7 @@ input[type="checkbox"].task-list-item-checkbox:checked {
    18. КОНТРОЛЫ: КНОПКИ, ПОЛЯ ВВОДА И ПЕРЕКЛЮЧАТЕЛИ (INPUTS & TOGGLES)
    ========================================================================== */
 
-button:not(.clickable-icon) {
+button:not(.clickable-icon):not(:has(> svg:only-child)):not([class*="toolbar"] button) {
   border-radius: var(--radius-s);
   font-size: var(--font-ui-small);
   font-weight: 500;
@@ -1139,11 +1139,11 @@ button:not(.clickable-icon) {
     transform var(--hig-duration-fast) var(--hig-ease);
 }
 
-button:not(.clickable-icon):hover {
+button:not(.clickable-icon):not(:has(> svg:only-child)):not([class*="toolbar"] button):hover {
   background-color: var(--background-modifier-hover);
 }
 
-button:not(.clickable-icon):active {
+button:not(.clickable-icon):not(:has(> svg:only-child)):not([class*="toolbar"] button):active {
   transform: scale(0.98);
 }
 
