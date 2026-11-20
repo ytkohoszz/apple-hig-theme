@@ -1323,3 +1323,202 @@ select:focus,
 .is-tablet .mobile-toolbar-option:active {
   background-color: var(--background-modifier-hover);
 }
+
+/* ==========================================================================
+   21. ВСТРАИВАЕМЫЕ ЗАМЕТКИ И МЕДИА (EMBEDS & TRANSCLUSIONS)
+   ========================================================================== */
+
+/* Вложенные заметки ![[note]] — мягкие карточки без жёсткой левой черты */
+.markdown-embed,
+.file-embed {
+  background-color: var(--background-primary-alt);
+  border: none;
+  border-radius: var(--radius-m);
+  padding: 16px 20px;
+  margin: 16px 0;
+  box-shadow: var(--shadow-s);
+  transition: box-shadow var(--hig-duration-normal) var(--hig-ease);
+}
+
+.markdown-embed-title {
+  font-size: var(--font-ui-small);
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.markdown-embed-content {
+  max-height: 420px;
+  scrollbar-width: none;
+}
+
+.markdown-embed-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Кнопка перехода к оригиналу заметки скрыта до наведения */
+.markdown-embed-link,
+.file-embed-link {
+  top: 10px;
+  right: 12px;
+  padding: 4px;
+  border-radius: var(--radius-s);
+  opacity: 0;
+  color: var(--text-muted);
+  transition:
+    opacity var(--hig-duration-fast) var(--hig-ease),
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.markdown-embed:hover .markdown-embed-link,
+.file-embed:hover .file-embed-link {
+  opacity: 0.75;
+}
+
+.markdown-embed-link:hover,
+.file-embed-link:hover {
+  opacity: 1;
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* ==========================================================================
+   22. OBSIDIAN CANVAS (КАРТОЧКИ И ISLAND UI ПАНЕЛИ)
+   ========================================================================== */
+
+.canvas-wrapper {
+  background-color: var(--background-secondary);
+}
+
+/* Карточки узлов Canvas */
+.canvas-node-container {
+  background-color: var(--background-primary);
+  border: 0.5px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-s);
+  transition:
+    border-color var(--hig-duration-fast) var(--hig-ease),
+    box-shadow var(--hig-duration-fast) var(--hig-ease);
+}
+
+.canvas-node.is-focused .canvas-node-container,
+.canvas-node.is-selected .canvas-node-container {
+  border: 1.5px solid var(--hig-accent);
+  box-shadow: 0 0 0 3px var(--background-modifier-active-hover), var(--shadow-l);
+}
+
+.canvas-node-label {
+  font-size: var(--font-ui-smaller);
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Парящие тулбары управления и контекстное меню над карточкой (Island UI) */
+.canvas-controls,
+.canvas-card-menu {
+  background-color: var(--hig-surface-popover);
+  backdrop-filter: var(--hig-blur-popover);
+  -webkit-backdrop-filter: var(--hig-blur-popover);
+  border: 0.5px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  box-shadow: var(--hig-shadow-popover);
+  padding: 4px;
+}
+
+.canvas-control-group {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.canvas-control-item,
+.canvas-card-menu-button {
+  border-radius: var(--radius-s);
+  color: var(--icon-color);
+  transition:
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.canvas-control-item:hover,
+.canvas-card-menu-button:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--icon-color-hover);
+}
+
+.is-mobile .canvas-control-item,
+.is-tablet .canvas-control-item,
+.is-mobile .canvas-card-menu-button,
+.is-tablet .canvas-card-menu-button {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* ==========================================================================
+   23. GRAPH VIEW (ПАЛИТРА УЗЛОВ И ПАНЕЛЬ НАСТРОЕК ГРАФА)
+   ========================================================================== */
+
+/* Токены цветов, которые считывает WebGL/Canvas рендерер графа Obsidian */
+.graph-view.color-fill {
+  color: var(--text-muted);
+}
+
+.graph-view.color-fill-focused,
+.graph-view.color-fill-highlight {
+  color: var(--hig-accent);
+}
+
+.graph-view.color-fill-tag {
+  color: #34C759;
+}
+
+.theme-dark .graph-view.color-fill-tag {
+  color: #30D158;
+}
+
+.graph-view.color-fill-attachment {
+  color: #FF9500;
+}
+
+.theme-dark .graph-view.color-fill-attachment {
+  color: #FF9F0A;
+}
+
+.graph-view.color-line {
+  color: var(--divider-color);
+}
+
+.graph-view.color-line-highlight {
+  color: var(--hig-accent);
+}
+
+.graph-view.color-text {
+  color: var(--text-normal);
+}
+
+/* Парящая панель фильтров и физики графа */
+.graph-controls {
+  background-color: var(--hig-surface-popover);
+  backdrop-filter: var(--hig-blur-popover);
+  -webkit-backdrop-filter: var(--hig-blur-popover);
+  border: 0.5px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  box-shadow: var(--hig-shadow-popover);
+  padding: 8px 12px;
+  scrollbar-width: none;
+}
+
+.graph-controls::-webkit-scrollbar {
+  display: none;
+}
+
+.graph-controls.is-close {
+  padding: 4px;
+  opacity: 0.65;
+  transition: opacity var(--hig-duration-fast) var(--hig-ease);
+}
+
+.graph-controls.is-close:hover {
+  opacity: 1;
+}
