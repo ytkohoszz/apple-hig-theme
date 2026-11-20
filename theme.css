@@ -1522,3 +1522,177 @@ select:focus,
 .graph-controls.is-close:hover {
   opacity: 1;
 }
+
+/* ==========================================================================
+   24. DATAVIEW (ТАБЛИЦЫ, СПИСКИ И ЗАДАЧИ В СТИЛЕ APPLE HIG)
+   ========================================================================== */
+
+/* Контейнер таблицы Dataview */
+.block-language-dataview,
+.dataview.dataview-container {
+  margin: 16px 0;
+}
+
+.table-view-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  background-color: var(--background-primary);
+}
+
+/* Заголовки колонок Dataview — без жёсткой нижней черты */
+.table-view-table > thead > tr > th {
+  background-color: var(--background-primary-alt);
+  border: none;
+  font-size: var(--font-ui-smaller);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  padding: 10px 14px;
+  text-align: left;
+}
+
+/* Строки и ячейки таблицы Dataview */
+.table-view-table > tbody > tr > td {
+  border: none;
+  border-bottom: 1px solid var(--divider-color);
+  padding: 10px 14px;
+  font-size: var(--font-ui-small);
+  vertical-align: middle;
+  transition: background-color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.table-view-table > tbody > tr:last-child > td {
+  border-bottom: none;
+}
+
+.table-view-table > tbody > tr:hover > td {
+  background-color: var(--background-modifier-hover);
+}
+
+/* Счётчик результатов в заголовке группы / таблицы (Progressive Disclosure) */
+.dataview.small-text {
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+  font-weight: 500;
+  margin-left: 6px;
+}
+
+/* Списки и задачи Dataview (TASK / LIST) */
+.dataview.list-view-ul,
+.dataview.task-list-ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.dataview.list-view-ul > li,
+.dataview.task-list-item {
+  border-radius: var(--radius-s);
+  padding: 6px 10px;
+  margin-bottom: 2px;
+  transition: background-color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.dataview.list-view-ul > li:hover,
+.dataview.task-list-item:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+/* Инлайн-поля Dataview [key:: value] в виде аккуратных плашек */
+.dataview.inline-field {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: var(--font-ui-smaller);
+  background-color: var(--background-primary-alt);
+  vertical-align: baseline;
+}
+
+.dataview.inline-field-key {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-muted);
+  font-weight: 500;
+  padding: 1px 7px;
+}
+
+.dataview.inline-field-value {
+  color: var(--text-normal);
+  padding: 1px 7px;
+}
+
+.is-mobile .table-view-table > tbody > tr > td,
+.is-tablet .table-view-table > tbody > tr > td,
+.is-mobile .dataview.list-view-ul > li,
+.is-tablet .dataview.list-view-ul > li {
+  min-height: 44px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* ==========================================================================
+   25. МОСТ ДЛЯ КАСТОМНЫХ ПЛАГИНОВ (SEMANTIC TOKENS & ISLAND UI BRIDGE)
+   ========================================================================== */
+
+:root,
+body {
+  /* Семантические токены поверхностей и статусов для кастомных плагинов */
+  --hig-card-bg: var(--background-primary-alt);
+  --hig-card-border: var(--background-modifier-border);
+  --hig-card-radius: var(--radius-m);
+  --hig-pill-bg: var(--background-modifier-active-hover);
+  --hig-pill-color: var(--hig-accent);
+
+  /* Системная семантика Apple (Success / Warning / Danger) */
+  --hig-green: #34C759;
+  --hig-orange: #FF9500;
+  --hig-red: #FF3B30;
+}
+
+.theme-dark {
+  --hig-green: #30D158;
+  --hig-orange: #FF9F0A;
+  --hig-red: #FF453A;
+}
+
+/* Готовые классы-примитивы: можно навешивать на контейнеры в кастомных плагинах */
+.hig-island {
+  background-color: var(--hig-surface-popover);
+  backdrop-filter: var(--hig-blur-popover);
+  -webkit-backdrop-filter: var(--hig-blur-popover);
+  border: 0.5px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  box-shadow: var(--hig-shadow-popover);
+}
+
+.hig-card {
+  background-color: var(--hig-card-bg);
+  border: 0.5px solid var(--hig-card-border);
+  border-radius: var(--hig-card-radius);
+  box-shadow: var(--shadow-s);
+  transition:
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    box-shadow var(--hig-duration-fast) var(--hig-ease);
+}
+
+/* Автоматическая подстройка контейнеров кастомных плагинов в рабочей области */
+.workspace-leaf-content[data-type*="dashboard"] .view-content,
+.workspace-leaf-content[data-type*="analytics"] .view-content,
+.workspace-leaf-content[data-type*="study"] .view-content,
+.workspace-leaf-content[data-type*="grammar"] .view-content,
+.workspace-leaf-content[data-type*="focus"] .view-content,
+.workspace-leaf-content[data-type*="nutrition"] .view-content {
+  background-color: var(--background-primary);
+  scrollbar-width: none;
+}
+
+.workspace-leaf-content[data-type*="dashboard"] .view-content::-webkit-scrollbar,
+.workspace-leaf-content[data-type*="analytics"] .view-content::-webkit-scrollbar,
+.workspace-leaf-content[data-type*="study"] .view-content::-webkit-scrollbar,
+.workspace-leaf-content[data-type*="grammar"] .view-content::-webkit-scrollbar,
+.workspace-leaf-content[data-type*="focus"] .view-content::-webkit-scrollbar,
+.workspace-leaf-content[data-type*="nutrition"] .view-content::-webkit-scrollbar {
+  display: none;
+}
