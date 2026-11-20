@@ -1,0 +1,1235 @@
+/* ==========================================================================
+   1. ГЛОБАЛЬНЫЕ ТОКЕНЫ: ТИПОГРАФИКА, ГЕОМЕТРИЯ И АНИМАЦИИ
+   ========================================================================== */
+
+:root,
+body {
+  /* Системные шрифты Apple */
+  --font-interface-theme: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  --font-text-theme: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  --font-monospace-theme: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Базовый ритм чтения */
+  --font-text-size: 16px;
+  --font-ui-smaller: 12px;
+  --font-ui-small: 13px;
+  --font-ui-medium: 14px;
+  --font-ui-large: 16px;
+  --line-height-normal: 1.6;
+  --line-height-tight: 1.3;
+
+  /* Иерархия заголовков (контраст за счёт размера, веса и трекинга) */
+  --h1-size: 1.85em;
+  --h2-size: 1.45em;
+  --h3-size: 1.22em;
+  --h4-size: 1.08em;
+  --h5-size: 1em;
+  --h6-size: 0.92em;
+
+  --h1-weight: 700;
+  --h2-weight: 600;
+  --h3-weight: 600;
+  --h4-weight: 600;
+  --h5-weight: 600;
+  --h6-weight: 600;
+
+  --h1-line-height: 1.22;
+  --h2-line-height: 1.28;
+  --h3-line-height: 1.35;
+  --h4-line-height: 1.4;
+  --h5-line-height: 1.45;
+  --h6-line-height: 1.45;
+
+  /* Скругления (Apple HIG: единая шкала от контролов до модальных окон) */
+  --radius-s: 8px;     /* Кнопки, пункты меню, поля ввода */
+  --radius-m: 12px;    /* Карточки, плавающие панели, callouts */
+  --radius-l: 16px;    /* Модальные окна, поповеры */
+  --radius-xl: 20px;   /* Крупные оверлеи */
+  --tab-radius: 8px;
+  --input-radius: 8px;
+  --button-radius: 8px;
+  --toggle-radius: 14px;
+
+  /* Убираем жёсткие рамки по умолчанию */
+  --border-width: 1px;
+  --divider-width: 1px;
+  --input-border-width: 1px;
+
+  /* Материалы (Vibrancy / матовое стекло для будущих панелей и модалок) */
+  --hig-blur-sidebar: blur(22px) saturate(180%);
+  --hig-blur-popover: blur(30px) saturate(190%);
+
+  /* Анимации и кривая замедления iOS/macOS */
+  --hig-ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --hig-duration-fast: 0.15s;
+  --hig-duration-normal: 0.22s;
+}
+
+/* ==========================================================================
+   2. СВЕТЛАЯ ТЕМА (.theme-light)
+   ========================================================================== */
+
+.theme-light {
+  color-scheme: light;
+
+  /* Акцентный цвет (быстрая смена через --hig-accent + синхронизация с ядром) */
+  --hig-accent: #007AFF;
+  --hig-accent-hover: #0066D6;
+  --accent-h: 211;
+  --accent-s: 100%;
+  --accent-l: 50%;
+
+  --interactive-accent: var(--hig-accent);
+  --interactive-accent-hover: var(--hig-accent-hover);
+  --text-accent: var(--hig-accent);
+  --text-accent-hover: var(--hig-accent-hover);
+
+  /* Поверхности и глубина */
+  --background-primary: #FFFFFF;           /* Основной холст заметки */
+  --background-primary-alt: #F9F9FB;       /* Блоки кода, callouts */
+  --background-secondary: #F5F5F7;         /* Боковые панели (Sidebars) */
+  --background-secondary-alt: #EBEBF0;     /* Вторичные подложки, активные табы */
+
+  /* Полупрозрачные слои для backdrop-filter */
+  --hig-surface-sidebar: rgba(245, 245, 247, 0.78);
+  --hig-surface-popover: rgba(255, 255, 255, 0.84);
+  --hig-backdrop-dim: rgba(0, 0, 0, 0.22);
+
+  /* Интерактивные заливки (hover / active) */
+  --background-modifier-hover: rgba(0, 0, 0, 0.045);
+  --background-modifier-active-hover: rgba(0, 122, 255, 0.12);
+  --background-modifier-form-field: rgba(0, 0, 0, 0.035);
+  --text-selection: rgba(0, 122, 255, 0.18);
+
+  /* Тонкие полупрозрачные разделители вместо жёстких рамок */
+  --background-modifier-border: rgba(0, 0, 0, 0.06);
+  --background-modifier-border-hover: rgba(0, 0, 0, 0.12);
+  --background-modifier-border-focus: rgba(0, 122, 255, 0.45);
+  --divider-color: rgba(0, 0, 0, 0.06);
+
+  /* Типографика и контраст текста */
+  --text-normal: #1D1D1F;
+  --text-muted: #6E6E73;
+  --text-faint: #AEAEB2;
+  --text-on-accent: #FFFFFF;
+
+  /* Иконки */
+  --icon-color: #6E6E73;
+  --icon-color-hover: #1D1D1F;
+  --icon-color-active: var(--hig-accent);
+  --icon-color-focused: var(--hig-accent);
+
+  /* Многослойные рассеянные тени macOS */
+  --shadow-s: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-l: 0 12px 32px rgba(0, 0, 0, 0.10), 0 2px 8px rgba(0, 0, 0, 0.05);
+  --hig-shadow-popover: 0 18px 44px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06), 0 0 0 0.5px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================================
+   3. ТЁМНАЯ ТЕМА (.theme-dark)
+   ========================================================================== */
+
+.theme-dark {
+  color-scheme: dark;
+
+  /* Акцентный цвет */
+  --hig-accent: #0A84FF;
+  --hig-accent-hover: #409CFF;
+  --accent-h: 210;
+  --accent-s: 100%;
+  --accent-l: 52%;
+
+  --interactive-accent: var(--hig-accent);
+  --interactive-accent-hover: var(--hig-accent-hover);
+  --text-accent: var(--hig-accent);
+  --text-accent-hover: var(--hig-accent-hover);
+
+  /* Поверхности и глубина (графитовые слои без чистого #000000) */
+  --background-primary: #1C1C1E;           /* Основной холст заметки */
+  --background-primary-alt: #242426;       /* Блоки кода, callouts */
+  --background-secondary: #161618;         /* Боковые панели (углублённый слой) */
+  --background-secondary-alt: #2C2C2E;     /* Приподнятые карточки и активные элементы */
+
+  /* Полупрозрачные слои для backdrop-filter */
+  --hig-surface-sidebar: rgba(22, 22, 24, 0.78);
+  --hig-surface-popover: rgba(44, 44, 46, 0.84);
+  --hig-backdrop-dim: rgba(0, 0, 0, 0.45);
+
+  /* Интерактивные заливки (hover / active) */
+  --background-modifier-hover: rgba(255, 255, 255, 0.06);
+  --background-modifier-active-hover: rgba(10, 132, 255, 0.16);
+  --background-modifier-form-field: rgba(255, 255, 255, 0.06);
+  --text-selection: rgba(10, 132, 255, 0.28);
+
+  /* Тонкие полупрозрачные границы */
+  --background-modifier-border: rgba(255, 255, 255, 0.08);
+  --background-modifier-border-hover: rgba(255, 255, 255, 0.15);
+  --background-modifier-border-focus: rgba(10, 132, 255, 0.50);
+  --divider-color: rgba(255, 255, 255, 0.08);
+
+  /* Типографика и контраст текста */
+  --text-normal: #F5F5F7;
+  --text-muted: #98989D;
+  --text-faint: #636366;
+  --text-on-accent: #FFFFFF;
+
+  /* Иконки */
+  --icon-color: #98989D;
+  --icon-color-hover: #F5F5F7;
+  --icon-color-active: var(--hig-accent);
+  --icon-color-focused: var(--hig-accent);
+
+  /* Тени macOS Dark Mode + тонкий внутренний световой контур */
+  --shadow-s: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 0 0 0.5px rgba(255, 255, 255, 0.06);
+  --shadow-l: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 0 0 0.5px rgba(255, 255, 255, 0.10);
+  --hig-shadow-popover: 0 22px 50px rgba(0, 0, 0, 0.55), 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 0 0 0.5px rgba(255, 255, 255, 0.14);
+}
+
+/* ==========================================================================
+   4. WORKSPACE, ВКЛАДКИ И ЗАГОЛОВКИ ПАНЕЛЕЙ (WORKSPACE & TABS)
+   ========================================================================== */
+
+/* Общий контейнер заголовков вкладок и системный titlebar */
+.titlebar,
+.workspace-tab-header-container {
+  background-color: var(--hig-surface-sidebar);
+  backdrop-filter: var(--hig-blur-sidebar);
+  -webkit-backdrop-filter: var(--hig-blur-sidebar);
+  border-bottom: none;
+  box-shadow: none;
+  height: 40px;
+  padding: 4px 8px;
+}
+
+.workspace-tab-header-container-inner {
+  gap: 4px;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+}
+
+/* Сама вкладка — компактная скруглённая плашка без ушек и нижних бордеров */
+.workspace-tab-header {
+  border-radius: var(--radius-s);
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  color: var(--text-muted);
+  border: none;
+  box-shadow: none;
+  transition:
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    color var(--hig-duration-fast) var(--hig-ease),
+    box-shadow var(--hig-duration-fast) var(--hig-ease);
+}
+
+/* Убираем стандартные декоративные псевдоэлементы-скругления ядра Obsidian */
+.workspace-tab-header::before,
+.workspace-tab-header::after,
+.workspace-tab-header-inner::after {
+  display: none;
+}
+
+.workspace-tab-header-inner {
+  padding: 4px 10px;
+  gap: 6px;
+  border-radius: var(--radius-s);
+}
+
+.workspace-tab-header:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* Активная вкладка — приподнятая капсула с мягкой тенью */
+.workspace-tab-header.is-active {
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  font-weight: 500;
+  box-shadow: var(--shadow-s);
+}
+
+.theme-dark .workspace-tab-header.is-active {
+  background-color: var(--background-secondary-alt);
+}
+
+/* Progressive Disclosure: иконка вкладки приглушена, крестик скрыт до наведения */
+.workspace-tab-header-inner-icon {
+  opacity: 0.65;
+  transition: opacity var(--hig-duration-fast) var(--hig-ease);
+}
+
+.workspace-tab-header:hover .workspace-tab-header-inner-icon,
+.workspace-tab-header.is-active .workspace-tab-header-inner-icon {
+  opacity: 1;
+}
+
+.workspace-tab-header-inner-close-button {
+  opacity: 0;
+  border-radius: 6px;
+  padding: 2px;
+  transition:
+    opacity var(--hig-duration-fast) var(--hig-ease),
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.workspace-tab-header:hover .workspace-tab-header-inner-close-button,
+.workspace-tab-header.is-active:hover .workspace-tab-header-inner-close-button {
+  opacity: 0.7;
+}
+
+.workspace-tab-header-inner-close-button:hover {
+  opacity: 1;
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* Кнопки «Новая вкладка» и «Список вкладок» */
+.workspace-tab-header-new-tab,
+.workspace-tab-header-tab-list {
+  opacity: 0.55;
+  border-radius: var(--radius-s);
+  transition:
+    opacity var(--hig-duration-fast) var(--hig-ease),
+    background-color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.workspace-tab-header-container:hover .workspace-tab-header-new-tab,
+.workspace-tab-header-container:hover .workspace-tab-header-tab-list {
+  opacity: 0.85;
+}
+
+.workspace-tab-header-new-tab:hover,
+.workspace-tab-header-tab-list:hover {
+  opacity: 1;
+  background-color: var(--background-modifier-hover);
+}
+
+/* ==========================================================================
+   5. ВЕРХНЯЯ ПАНЕЛЬ ЗАМЕТКИ (VIEW HEADER) И РАЗДЕЛИТЕЛИ ПАНЕЛЕЙ
+   ========================================================================== */
+
+/* Чистый заголовок активного документа без нижней линии */
+.view-header {
+  background-color: var(--background-primary);
+  border-bottom: none;
+  height: 42px;
+  padding: 0 16px;
+}
+
+.view-header-title-container {
+  gap: 6px;
+}
+
+/* Хлебные крошки и название заметки в шапке приглушены, чтобы не спорить с H1 */
+.view-header-title,
+.view-header-breadcrumb {
+  font-size: var(--font-ui-small);
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.view-header:hover .view-header-title {
+  color: var(--text-normal);
+}
+
+/* Кнопки действий в шапке (режим чтения, меню заметки, навигация) */
+.view-header-nav-buttons,
+.view-actions {
+  opacity: 0.45;
+  gap: 4px;
+  transition: opacity var(--hig-duration-normal) var(--hig-ease);
+}
+
+.view-header:hover .view-header-nav-buttons,
+.view-header:hover .view-actions,
+.view-actions:focus-within {
+  opacity: 1;
+}
+
+.view-action,
+.clickable-icon {
+  border-radius: var(--radius-s);
+  transition:
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    color var(--hig-duration-fast) var(--hig-ease);
+}
+
+/* Убираем жёсткие рамки у панелей (leaves) и делаем невидимые ресайзеры */
+.workspace-split.mod-root,
+.workspace-split.mod-root > .workspace-leaf:first-of-type:last-of-type .view-header {
+  border: none;
+}
+
+.workspace-leaf-resize-handle {
+  background-color: transparent;
+  border-color: transparent;
+  transition: background-color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.workspace-leaf-resize-handle:hover,
+.workspace-leaf-resize-handle:active {
+  background-color: var(--hig-accent);
+}
+
+/* ==========================================================================
+   6. АДАПТАЦИЯ ПОД IPADOS / TOUCH-ЭКРАНЫ (44x44px ЗОНЫ КАСАНИЯ)
+   ========================================================================== */
+
+.is-mobile .view-header,
+.is-tablet .view-header {
+  height: 48px;
+  padding: 0 12px;
+}
+
+.is-mobile .view-action,
+.is-tablet .view-action,
+.is-mobile .workspace-tab-header-new-tab,
+.is-tablet .workspace-tab-header-new-tab {
+  min-width: 44px;
+  min-height: 44px;
+  opacity: 0.85;
+}
+
+/* На тач-экранах нет hover — оставляем крестик закрытия видимым у активной вкладки */
+.is-mobile .workspace-tab-header.is-active .workspace-tab-header-inner-close-button,
+.is-tablet .workspace-tab-header.is-active .workspace-tab-header-inner-close-button {
+  opacity: 0.75;
+  min-width: 28px;
+  min-height: 28px;
+}
+
+/* ==========================================================================
+   7. БОКОВЫЕ ПАНЕЛИ И RIBBON (SIDEBARS & LEFT RIBBON)
+   ========================================================================== */
+
+/* Левая узкая панель с иконками (Ribbon) без жёстких границ */
+.workspace-ribbon.mod-left {
+  background-color: var(--hig-surface-sidebar);
+  backdrop-filter: var(--hig-blur-sidebar);
+  -webkit-backdrop-filter: var(--hig-blur-sidebar);
+  border-right: none;
+  padding: 8px 4px;
+}
+
+.workspace-ribbon.mod-left.is-collapsed {
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Progressive Disclosure: иконки Ribbon приглушены в покое */
+.side-dock-actions,
+.side-dock-settings {
+  gap: 4px;
+  opacity: 0.55;
+  transition: opacity var(--hig-duration-normal) var(--hig-ease);
+}
+
+.workspace-ribbon:hover .side-dock-actions,
+.workspace-ribbon:hover .side-dock-settings,
+.side-dock-actions:focus-within,
+.side-dock-settings:focus-within {
+  opacity: 1;
+}
+
+.side-dock-ribbon-action {
+  border-radius: var(--radius-s);
+  padding: 6px;
+}
+
+/* Кнопки сворачивания/разворачивания боковых панелей */
+.sidebar-toggle-button {
+  opacity: 0.5;
+  transition: opacity var(--hig-duration-fast) var(--hig-ease);
+}
+
+.sidebar-toggle-button:hover {
+  opacity: 1;
+}
+
+/* Сами боковые панели */
+.workspace-split.mod-left-split,
+.workspace-split.mod-right-split {
+  background-color: var(--background-secondary);
+  border: none;
+}
+
+.workspace-split.mod-left-split .workspace-tabs,
+.workspace-split.mod-right-split .workspace-tabs {
+  background-color: transparent;
+}
+
+/* Переключатель хранилища внизу левой панели без разделительной черты */
+.workspace-sidedock-vault-profile {
+  background-color: transparent;
+  border-top: none;
+  padding: 8px 12px;
+  opacity: 0.75;
+  transition: opacity var(--hig-duration-fast) var(--hig-ease);
+}
+
+.workspace-sidedock-vault-profile:hover {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   8. ФАЙЛОВОЕ ДЕРЕВО И НАВИГАЦИЯ (FILE EXPLORER & TREES)
+   ========================================================================== */
+
+/* Верхняя панель кнопок в файловом дереве (новая заметка, папка, сортировка) */
+.nav-header {
+  padding: 6px 10px 4px;
+  border-bottom: none;
+}
+
+.nav-buttons-container {
+  gap: 4px;
+  opacity: 0.45;
+  transition: opacity var(--hig-duration-normal) var(--hig-ease);
+}
+
+.nav-header:hover .nav-buttons-container,
+.nav-buttons-container:focus-within {
+  opacity: 1;
+}
+
+/* Контейнер списка файлов: воздух по краям и скрытый скроллбар */
+.nav-files-container {
+  padding: 4px 10px 16px;
+  scrollbar-width: none;
+}
+
+.nav-files-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Убираем жёсткие вертикальные направляющие вложенности для чистоты */
+.nav-folder-children {
+  border-left: none;
+  padding-left: 14px;
+}
+
+/* Элементы дерева (папки и файлы) — скруглённые капсулы (pill-shape) */
+.nav-file-title,
+.nav-folder-title {
+  border-radius: var(--radius-s);
+  padding: 6px 10px;
+  margin-bottom: 2px;
+  font-size: var(--font-ui-small);
+  line-height: 1.35;
+  color: var(--text-normal);
+  transition:
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.nav-folder-title {
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.nav-folder-title:hover {
+  color: var(--text-normal);
+  background-color: var(--background-modifier-hover);
+}
+
+.nav-file-title:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+/* Активный файл — мягкая акцентная капсула в стиле macOS Finder / iPadOS */
+.nav-file-title.is-active,
+.nav-file-title.is-active:hover {
+  background-color: var(--background-modifier-active-hover);
+  color: var(--hig-accent);
+  font-weight: 500;
+}
+
+/* Стрелка раскрытия папки */
+.nav-folder-collapse-indicator {
+  color: var(--text-faint);
+  transition:
+    transform var(--hig-duration-fast) var(--hig-ease),
+    color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.nav-folder-title:hover .nav-folder-collapse-indicator {
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   9. СТРОКА СОСТОЯНИЯ (STATUS BAR — PROGRESSIVE DISCLOSURE)
+   ========================================================================== */
+
+/* Счётчики слов и индикаторы внизу экрана приглушены, пока не наведён курсор */
+.status-bar {
+  background-color: var(--hig-surface-popover);
+  backdrop-filter: var(--hig-blur-popover);
+  -webkit-backdrop-filter: var(--hig-blur-popover);
+  border: 0.5px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-s);
+  margin: 0 12px 10px 0;
+  padding: 4px 10px;
+  opacity: 0.35;
+  transition:
+    opacity var(--hig-duration-normal) var(--hig-ease),
+    transform var(--hig-duration-normal) var(--hig-ease);
+}
+
+.status-bar:hover {
+  opacity: 0.95;
+}
+
+/* ==========================================================================
+   10. АДАПТАЦИЯ НАВИГАЦИИ ПОД IPADOS / TOUCH
+   ========================================================================== */
+
+.is-mobile .nav-file-title,
+.is-tablet .nav-file-title,
+.is-mobile .nav-folder-title,
+.is-tablet .nav-folder-title {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: var(--font-ui-medium);
+}
+
+.is-mobile .nav-buttons-container,
+.is-tablet .nav-buttons-container {
+  opacity: 0.85;
+}
+
+.is-mobile .nav-action-button,
+.is-tablet .nav-action-button {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* ==========================================================================
+   11. РЕДАКТОР И РЕЖИМ ЧТЕНИЯ (EDITOR & READING VIEW)
+   ========================================================================== */
+
+/* Чистое полотно заметки со скрытыми визуальными скроллбарами */
+.markdown-source-view.mod-cm6 .cm-scroller,
+.markdown-reading-view .markdown-preview-view {
+  padding: 28px 36px 64px;
+  scrollbar-width: none;
+}
+
+.markdown-source-view.mod-cm6 .cm-scroller::-webkit-scrollbar,
+.markdown-reading-view .markdown-preview-view::-webkit-scrollbar {
+  display: none;
+}
+
+/* Заголовок заметки (Inline Title) в стиле Apple Notes */
+.inline-title {
+  font-family: var(--font-text-theme);
+  font-size: 2.1em;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+  color: var(--text-normal);
+  margin-bottom: 0.55em;
+}
+
+/* Отрицательный трекинг для крупных заголовков, характерный для SF Pro Display */
+.markdown-rendered h1,
+.HyperMD-header-1 {
+  letter-spacing: -0.02em;
+}
+
+.markdown-rendered h2,
+.HyperMD-header-2 {
+  letter-spacing: -0.015em;
+}
+
+.markdown-rendered h3,
+.HyperMD-header-3 {
+  letter-spacing: -0.01em;
+}
+
+/* Ссылки — точечный акцент без тяжёлого подчёркивания в покое */
+.markdown-rendered a,
+.cm-s-obsidian span.cm-hmd-internal-link,
+.cm-s-obsidian span.cm-link {
+  color: var(--text-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--hig-duration-fast) var(--hig-ease),
+    border-color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.markdown-rendered a:hover,
+.cm-s-obsidian span.cm-hmd-internal-link:hover,
+.cm-s-obsidian span.cm-link:hover {
+  color: var(--text-accent-hover);
+  border-bottom-color: currentColor;
+}
+
+/* ==========================================================================
+   12. СВОЙСТВА ЗАМЕТКИ (PROPERTIES — PROGRESSIVE DISCLOSURE)
+   ========================================================================== */
+
+/* Метаданные приглушены в спокойном состоянии, чтобы не отвлекать от текста */
+.metadata-container {
+  background-color: var(--background-primary-alt);
+  border: none;
+  border-radius: var(--radius-m);
+  padding: 10px 14px;
+  margin-bottom: 24px;
+  opacity: 0.65;
+  transition:
+    opacity var(--hig-duration-normal) var(--hig-ease),
+    background-color var(--hig-duration-normal) var(--hig-ease);
+}
+
+.metadata-container:hover,
+.metadata-container:focus-within {
+  opacity: 1;
+}
+
+.metadata-properties-heading {
+  font-size: var(--font-ui-smaller);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.metadata-property {
+  border-radius: var(--radius-s);
+  padding: 2px 4px;
+  border: none;
+  transition: background-color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.metadata-property:hover,
+.metadata-property:focus-within {
+  background-color: var(--background-modifier-hover);
+}
+
+/* Теги-капсулы (Pills) */
+.multi-select-pill,
+a.tag {
+  background-color: var(--background-modifier-active-hover);
+  color: var(--hig-accent);
+  border: none;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: var(--font-ui-smaller);
+  font-weight: 500;
+  transition:
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.multi-select-pill:hover,
+a.tag:hover {
+  background-color: var(--hig-accent);
+  color: var(--text-on-accent);
+}
+
+/* ==========================================================================
+   13. CALLOUTS, ЦИТАТЫ, БЛОКИ КОДА И ТАБЛИЦЫ
+   ========================================================================== */
+
+/* Callout-карточки без жёстких рамок */
+.callout {
+  background-color: var(--background-primary-alt);
+  border: none;
+  border-radius: var(--radius-m);
+  padding: 14px 16px;
+  margin: 16px 0;
+  box-shadow: var(--shadow-s);
+}
+
+.callout-title {
+  font-weight: 600;
+  gap: 8px;
+}
+
+/* Цитаты (Blockquotes) с мягкой вертикальной капсулой */
+.markdown-rendered blockquote,
+.HyperMD-quote {
+  border-left: 3px solid var(--background-modifier-border-hover);
+  padding-left: 14px;
+  color: var(--text-muted);
+}
+
+/* Блоки кода и инлайн-код */
+.markdown-rendered pre,
+.HyperMD-codeblock {
+  background-color: var(--background-primary-alt);
+  border: none;
+  border-radius: var(--radius-m);
+}
+
+.markdown-rendered pre {
+  padding: 14px 16px;
+  position: relative;
+}
+
+.markdown-rendered code,
+.cm-s-obsidian span.cm-inline-code {
+  background-color: var(--background-primary-alt);
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 0.88em;
+}
+
+/* Кнопка копирования кода скрыта до наведения на блок */
+.markdown-rendered pre > button.copy-code-button {
+  opacity: 0;
+  background-color: var(--hig-surface-popover);
+  backdrop-filter: var(--hig-blur-sidebar);
+  -webkit-backdrop-filter: var(--hig-blur-sidebar);
+  border: 0.5px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  color: var(--text-muted);
+  transition:
+    opacity var(--hig-duration-fast) var(--hig-ease),
+    color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.markdown-rendered pre:hover > button.copy-code-button {
+  opacity: 1;
+}
+
+.markdown-rendered pre > button.copy-code-button:hover {
+  color: var(--text-normal);
+}
+
+/* Таблицы без сетки из тяжёлых линий */
+.markdown-rendered table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  margin: 16px 0;
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+.markdown-rendered th {
+  background-color: var(--background-primary-alt);
+  font-weight: 600;
+  font-size: var(--font-ui-small);
+  color: var(--text-muted);
+  text-align: left;
+  border: none;
+  padding: 10px 14px;
+}
+
+.markdown-rendered td {
+  border: none;
+  border-bottom: 1px solid var(--divider-color);
+  padding: 10px 14px;
+  transition: background-color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.markdown-rendered tr:last-child td {
+  border-bottom: none;
+}
+
+.markdown-rendered tbody tr:hover td {
+  background-color: var(--background-modifier-hover);
+}
+
+/* Чекбоксы в стиле Apple Reminders */
+input[type="checkbox"].task-list-item-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text-faint);
+  background-color: transparent;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-right: 8px;
+  transition:
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    border-color var(--hig-duration-fast) var(--hig-ease),
+    transform var(--hig-duration-fast) var(--hig-ease);
+}
+
+input[type="checkbox"].task-list-item-checkbox:hover {
+  border-color: var(--hig-accent);
+}
+
+input[type="checkbox"].task-list-item-checkbox:checked {
+  background-color: var(--hig-accent);
+  border-color: var(--hig-accent);
+}
+
+/* ==========================================================================
+   14. АДАПТАЦИЯ РЕДАКТОРА ПОД IPADOS / TOUCH
+   ========================================================================== */
+
+.is-mobile .markdown-source-view.mod-cm6 .cm-scroller,
+.is-tablet .markdown-source-view.mod-cm6 .cm-scroller,
+.is-mobile .markdown-reading-view .markdown-preview-view,
+.is-tablet .markdown-reading-view .markdown-preview-view {
+  padding: 20px 20px 72px;
+}
+
+.is-mobile .metadata-container,
+.is-tablet .metadata-container {
+  opacity: 0.9;
+}
+
+.is-mobile input[type="checkbox"].task-list-item-checkbox,
+.is-tablet input[type="checkbox"].task-list-item-checkbox {
+  width: 22px;
+  height: 22px;
+}
+
+/* ==========================================================================
+   15. МОДАЛЬНЫЕ ОКНА И НАСТРОЙКИ (MODALS & SETTINGS)
+   ========================================================================== */
+
+/* Затемнение фона за модальными окнами */
+.modal-bg {
+  background-color: var(--hig-backdrop-dim);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Основной контейнер модального окна */
+.modal {
+  background-color: var(--hig-surface-popover);
+  backdrop-filter: var(--hig-blur-popover);
+  -webkit-backdrop-filter: var(--hig-blur-popover);
+  border: 0.5px solid var(--background-modifier-border);
+  border-radius: var(--radius-l);
+  box-shadow: var(--hig-shadow-popover);
+  padding: 20px 24px;
+}
+
+.modal-title {
+  font-size: 1.25em;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-bottom: 14px;
+}
+
+/* Кнопка закрытия модального окна */
+.modal-close-button {
+  border-radius: 999px;
+  color: var(--text-muted);
+  opacity: 0.7;
+  transition:
+    opacity var(--hig-duration-fast) var(--hig-ease),
+    background-color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.modal-close-button:hover {
+  opacity: 1;
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* Окно настроек (Settings) в стиле macOS System Settings */
+.modal.mod-settings {
+  padding: 0;
+  overflow: hidden;
+}
+
+.modal.mod-settings .vertical-tab-header {
+  background-color: var(--background-secondary);
+  border-right: 0.5px solid var(--divider-color);
+  padding: 16px 10px;
+  scrollbar-width: none;
+}
+
+.modal.mod-settings .vertical-tab-header::-webkit-scrollbar {
+  display: none;
+}
+
+.vertical-tab-header-group-title {
+  font-size: var(--font-ui-smaller);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  padding: 10px 10px 4px;
+}
+
+.vertical-tab-nav-item {
+  border-radius: var(--radius-s);
+  padding: 7px 10px;
+  margin-bottom: 2px;
+  font-size: var(--font-ui-small);
+  color: var(--text-normal);
+  transition:
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.vertical-tab-nav-item:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.vertical-tab-nav-item.is-active {
+  background-color: var(--hig-accent);
+  color: var(--text-on-accent);
+  font-weight: 500;
+}
+
+.modal.mod-settings .vertical-tab-content {
+  background-color: var(--background-primary);
+  padding: 24px 32px 40px;
+  scrollbar-width: none;
+}
+
+.modal.mod-settings .vertical-tab-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Разделители между пунктами настроек */
+.setting-item {
+  border-top: none;
+  border-bottom: 1px solid var(--divider-color);
+  padding: 14px 0;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-item-heading {
+  border-bottom: none;
+  padding-top: 20px;
+  padding-bottom: 6px;
+}
+
+/* ==========================================================================
+   16. КОМАНДНАЯ ПАЛИТРА И БЫСТРЫЙ ПЕРЕКЛЮЧАТЕЛЬ (PROMPT / SPOTLIGHT)
+   ========================================================================== */
+
+.prompt {
+  background-color: var(--hig-surface-popover);
+  backdrop-filter: var(--hig-blur-popover);
+  -webkit-backdrop-filter: var(--hig-blur-popover);
+  border: 0.5px solid var(--background-modifier-border);
+  border-radius: var(--radius-l);
+  box-shadow: var(--hig-shadow-popover);
+  padding: 8px;
+}
+
+.prompt input.prompt-input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--divider-color);
+  border-radius: 0;
+  font-size: 1.05em;
+  padding: 12px 14px;
+  box-shadow: none;
+}
+
+.prompt input.prompt-input:focus {
+  box-shadow: none;
+  border-bottom-color: var(--hig-accent);
+}
+
+.prompt-results {
+  padding: 6px 0 2px;
+  scrollbar-width: none;
+}
+
+.prompt-results::-webkit-scrollbar {
+  display: none;
+}
+
+.suggestion-item {
+  border-radius: var(--radius-s);
+  padding: 8px 12px;
+  margin-bottom: 2px;
+  transition: background-color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.suggestion-item.is-selected {
+  background-color: var(--background-modifier-active-hover);
+  color: var(--hig-accent);
+}
+
+.suggestion-hotkey {
+  background-color: var(--background-modifier-hover);
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-family: var(--font-monospace-theme);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Подсказки внизу палитры приглушены */
+.prompt-instructions {
+  border-top: 1px solid var(--divider-color);
+  padding: 8px 12px 4px;
+  opacity: 0.55;
+  font-size: var(--font-ui-smaller);
+}
+
+/* ==========================================================================
+   17. КОНТЕКСТНЫЕ МЕНЮ И ВСПЛЫВАЮЩИЕ ПОДСКАЗКИ (MENUS & POPOVERS)
+   ========================================================================== */
+
+.menu,
+.popover.hover-popover {
+  background-color: var(--hig-surface-popover);
+  backdrop-filter: var(--hig-blur-popover);
+  -webkit-backdrop-filter: var(--hig-blur-popover);
+  border: 0.5px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  box-shadow: var(--hig-shadow-popover);
+  padding: 5px;
+}
+
+.menu-item {
+  border-radius: 7px;
+  padding: 6px 10px;
+  font-size: var(--font-ui-small);
+  gap: 8px;
+  transition:
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.menu-item.selected:not(.is-disabled):not(.is-label) {
+  background-color: var(--hig-accent);
+  color: var(--text-on-accent);
+}
+
+.menu-item.selected:not(.is-disabled):not(.is-label) .menu-item-icon {
+  color: var(--text-on-accent);
+}
+
+.menu-separator {
+  border-bottom: 1px solid var(--divider-color);
+  margin: 4px 8px;
+}
+
+/* ==========================================================================
+   18. КОНТРОЛЫ: КНОПКИ, ПОЛЯ ВВОДА И ПЕРЕКЛЮЧАТЕЛИ (INPUTS & TOGGLES)
+   ========================================================================== */
+
+button:not(.clickable-icon) {
+  border-radius: var(--radius-s);
+  font-size: var(--font-ui-small);
+  font-weight: 500;
+  padding: 6px 14px;
+  border: none;
+  background-color: var(--background-modifier-form-field);
+  color: var(--text-normal);
+  box-shadow: none;
+  transition:
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    transform var(--hig-duration-fast) var(--hig-ease);
+}
+
+button:not(.clickable-icon):hover {
+  background-color: var(--background-modifier-hover);
+}
+
+button:not(.clickable-icon):active {
+  transform: scale(0.98);
+}
+
+button.mod-cta {
+  background-color: var(--hig-accent);
+  color: var(--text-on-accent);
+}
+
+button.mod-cta:hover {
+  background-color: var(--hig-accent-hover);
+}
+
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select,
+.dropdown {
+  background-color: var(--background-modifier-form-field);
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  padding: 6px 10px;
+  font-size: var(--font-ui-small);
+  color: var(--text-normal);
+  box-shadow: none;
+  transition:
+    border-color var(--hig-duration-fast) var(--hig-ease),
+    background-color var(--hig-duration-fast) var(--hig-ease),
+    box-shadow var(--hig-duration-fast) var(--hig-ease);
+}
+
+input[type="text"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus,
+.dropdown:focus {
+  background-color: var(--background-primary);
+  border-color: var(--hig-accent);
+  box-shadow: 0 0 0 3px var(--background-modifier-active-hover);
+  outline: none;
+}
+
+/* Переключатели (Toggles) в стиле iOS */
+.checkbox-container {
+  background-color: var(--background-modifier-border-hover);
+  border-radius: 999px;
+  width: 42px;
+  height: 24px;
+  padding: 2px;
+  box-shadow: none;
+  transition: background-color var(--hig-duration-normal) var(--hig-ease);
+}
+
+.checkbox-container::after {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform var(--hig-duration-normal) var(--hig-ease);
+}
+
+.checkbox-container.is-enabled {
+  background-color: var(--hig-accent);
+}
+
+.checkbox-container.is-enabled::after {
+  transform: translateX(18px);
+}
+
+/* ==========================================================================
+   19. АДАПТАЦИЯ МОДАЛЬНЫХ ОКОН И КОНТРОЛОВ ПОД IPADOS / TOUCH
+   ========================================================================== */
+
+.is-mobile .menu-item,
+.is-tablet .menu-item,
+.is-mobile .suggestion-item,
+.is-tablet .suggestion-item,
+.is-mobile .vertical-tab-nav-item,
+.is-tablet .vertical-tab-nav-item {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  font-size: var(--font-ui-medium);
+}
+
+.is-mobile button:not(.clickable-icon),
+.is-tablet button:not(.clickable-icon) {
+  min-height: 44px;
+  padding: 10px 18px;
+  font-size: var(--font-ui-medium);
+}
