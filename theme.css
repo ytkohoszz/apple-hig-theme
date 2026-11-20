@@ -682,22 +682,42 @@ body {
    12. СВОЙСТВА ЗАМЕТКИ (PROPERTIES — PROGRESSIVE DISCLOSURE)
    ========================================================================== */
 
-/* Метаданные приглушены в спокойном состоянии, чтобы не отвлекать от текста */
+body {
+  --metadata-divider-width: 0px;
+  --metadata-border-width: 0px;
+  --metadata-label-background: transparent;
+  --metadata-label-background-hover: var(--background-modifier-hover);
+  --metadata-label-background-active: var(--background-modifier-hover);
+  --metadata-input-background: transparent;
+  --metadata-input-background-hover: var(--background-modifier-hover);
+  --metadata-input-background-active: var(--background-modifier-form-field);
+}
+
+/* Метаданные приглушены в спокойном состоянии, без лишних рамок и серых подложек */
 .metadata-container {
-  background-color: var(--background-primary-alt);
+  background-color: transparent;
   border: none;
   border-radius: var(--radius-m);
-  padding: 10px 14px;
-  margin-bottom: 24px;
-  opacity: 0.65;
-  transition:
-    opacity var(--hig-duration-normal) var(--hig-ease),
-    background-color var(--hig-duration-normal) var(--hig-ease);
+  padding: 6px 0;
+  margin-bottom: 20px;
+  opacity: 0.72;
+  transition: opacity var(--hig-duration-normal) var(--hig-ease);
 }
 
 .metadata-container:hover,
 .metadata-container:focus-within {
   opacity: 1;
+}
+
+/* В правой боковой панели свойств убираем внешний серый контейнер */
+.workspace-leaf-content[data-type="file-properties"] .view-content {
+  padding: 8px 14px;
+}
+
+.workspace-leaf-content[data-type="file-properties"] .metadata-container {
+  opacity: 1;
+  padding: 0;
+  margin-bottom: 0;
 }
 
 .metadata-properties-heading {
@@ -713,7 +733,14 @@ body {
   border-radius: var(--radius-s);
   padding: 2px 4px;
   border: none;
+  box-shadow: none;
   transition: background-color var(--hig-duration-fast) var(--hig-ease);
+}
+
+.metadata-property-key,
+.metadata-property-value {
+  border: none;
+  box-shadow: none;
 }
 
 .metadata-property:hover,
@@ -1125,7 +1152,13 @@ input[type="checkbox"].task-list-item-checkbox:checked {
    18. КОНТРОЛЫ: КНОПКИ, ПОЛЯ ВВОДА И ПЕРЕКЛЮЧАТЕЛИ (INPUTS & TOGGLES)
    ========================================================================== */
 
-button:not(.clickable-icon):not(:has(> svg:only-child)):not([class*="toolbar"] button) {
+/* Стилизуем только системные кнопки ядра (модалки, настройки, empty-state),
+   не затрагивая кастомные виджеты плагинов (календари, трекеры привычек, тулбары) */
+.modal button:not(.clickable-icon),
+.setting-item button:not(.clickable-icon),
+.empty-state-action-list button:not(.clickable-icon),
+button.mod-cta,
+button.mod-warning {
   border-radius: var(--radius-s);
   font-size: var(--font-ui-small);
   font-weight: 500;
@@ -1139,11 +1172,17 @@ button:not(.clickable-icon):not(:has(> svg:only-child)):not([class*="toolbar"] b
     transform var(--hig-duration-fast) var(--hig-ease);
 }
 
-button:not(.clickable-icon):not(:has(> svg:only-child)):not([class*="toolbar"] button):hover {
+.modal button:not(.clickable-icon):hover,
+.setting-item button:not(.clickable-icon):hover,
+.empty-state-action-list button:not(.clickable-icon):hover {
   background-color: var(--background-modifier-hover);
 }
 
-button:not(.clickable-icon):not(:has(> svg:only-child)):not([class*="toolbar"] button):active {
+.modal button:not(.clickable-icon):active,
+.setting-item button:not(.clickable-icon):active,
+.empty-state-action-list button:not(.clickable-icon):active,
+button.mod-cta:active,
+button.mod-warning:active {
   transform: scale(0.98);
 }
 
@@ -1233,8 +1272,12 @@ select:focus,
   font-size: var(--font-ui-medium);
 }
 
-.is-mobile button:not(.clickable-icon),
-.is-tablet button:not(.clickable-icon) {
+.is-mobile .modal button:not(.clickable-icon),
+.is-tablet .modal button:not(.clickable-icon),
+.is-mobile .setting-item button:not(.clickable-icon),
+.is-tablet .setting-item button:not(.clickable-icon),
+.is-mobile button.mod-cta,
+.is-tablet button.mod-cta {
   min-height: 44px;
   padding: 10px 18px;
   font-size: var(--font-ui-medium);
